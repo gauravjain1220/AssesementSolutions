@@ -1,0 +1,12 @@
+def CalculateArea(length, width):
+    if length == width:
+        return "This is a square!"
+    else:
+        return length * width
+
+# main driver function
+length = float(input("Enter length of Rectangle:")
+width= float(input("Enter width of Rectangle:")
+
+result=CalculateArea(length,width)
+print(result)
