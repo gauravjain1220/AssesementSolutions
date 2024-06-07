@@ -5,8 +5,8 @@ def CalculateArea(length, width):
         return length * width
 
 # main driver function
-length = float(input("Enter length of Rectangle:")
-width= float(input("Enter width of Rectangle:")
+length = float(input("Enter length of Rectangle:"))
+width= float(input("Enter width of Rectangle:"))
 
 result=CalculateArea(length,width)
 print(result)
