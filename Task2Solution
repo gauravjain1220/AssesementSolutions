@@ -1,0 +1,94 @@
+import mysql.connector
+
+# Function to connect to the database
+def connect_to_db():
+    return mysql.connector.connect(
+        host="your_host",    # e.g., "localhost" or the IP address of your MySQL server
+        user="your_user",    # your MySQL username
+        password="your_password"  # your MySQL password
+    )
+
+# Function to create the database and table
+def setup_database_and_table():
+    db = connect_to_db()
+    cursor = db.cursor()
+
+    # Create database
+    cursor.execute("CREATE DATABASE IF NOT EXISTS school")
+    cursor.execute("USE school")
+
+    # Create table
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS students (
+            student_id INT AUTO_INCREMENT PRIMARY KEY,
+            first_name VARCHAR(50),
+            last_name VARCHAR(50),
+            age INT,
+            grade FLOAT
+        )
+    """)
+
+    db.close()
+
+# Function to insert a new student record
+def insert_student(first_name, last_name, age, grade):
+    db = connect_to_db()
+    cursor = db.cursor()
+    cursor.execute("USE school")
+
+    query = "INSERT INTO students (first_name, last_name, age, grade) VALUES (%s, %s, %s, %s)"
+    values = (first_name, last_name, age, grade)
+    cursor.execute(query, values)
+
+    db.commit()
+    db.close()
+
+# Function to update the grade of a student
+def update_student_grade(first_name, new_grade):
+    db = connect_to_db()
+    cursor = db.cursor()
+    cursor.execute("USE school")
+
+    query = "UPDATE students SET grade = %s WHERE first_name = %s"
+    values = (new_grade, first_name)
+    cursor.execute(query, values)
+
+    db.commit()
+    db.close()
+
+# Function to delete a student record
+def delete_student(last_name):
+    db = connect_to_db()
+    cursor = db.cursor()
+    cursor.execute("USE school")
+
+    query = "DELETE FROM students WHERE last_name = %s"
+    values = (last_name,)
+    cursor.execute(query, values)
+
+    db.commit()
+    db.close()
+
+# Function to fetch and display all student records
+def fetch_and_display_students():
+    db = connect_to_db()
+    cursor = db.cursor()
+    cursor.execute("USE school")
+
+    cursor.execute("SELECT * FROM students")
+    rows = cursor.fetchall()
+
+    for row in rows:
+        print(row)
+
+    db.close()
+
+# Main script execution
+if __name__ == "__main__":
+    setup_database_and_table()
+
+    insert_student("Alice", "Smith", 18, 95.5)
+    update_student_grade("Alice", 97.0)
+    delete_student("Smith")
+
+    fetch_and_display_students()
