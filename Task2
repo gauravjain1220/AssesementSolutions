@@ -1,0 +1,20 @@
+
+NoOfTerms = int(input("Enter the number of terms : "))
+
+n1, n2 = 0, 1
+count = 0
+
+if NoOfTerms <= 0:
+   print("Please enter a positive integer")
+elif NoOfTerms == 1:
+   print("The Fibonacci sequence till",nterms,":")
+   print(n1)
+else:
+   print("The Fibonacci sequence is:")
+   while count < NoOfTerms:
+       print(n1)
+       nextTerm = n1 + n2
+       # update values
+       n1 = n2
+       n2 = nextTerm
+       count += 1
